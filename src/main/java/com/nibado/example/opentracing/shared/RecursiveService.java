@@ -1,7 +1,6 @@
 package com.nibado.example.opentracing.shared;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,8 +30,13 @@ public class RecursiveService {
     }
 
     private Response call(int count) {
-        ResponseEntity<Response> responseEntity = restTemplate.getForEntity(config.url(count), Response.class);
+        return restTemplate.getForEntity(config.url(count), Response.class).getBody();
 
-        return responseEntity.getBody();
+//        try {
+//            return config.client().count(count).execute().body();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
+
 }
