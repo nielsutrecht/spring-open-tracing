@@ -49,18 +49,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zipkin</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.opentracing.brave</groupId>
-            <artifactId>brave-opentracing</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-sleuth</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-zipkin</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>io.opentracing.brave</groupId>-->
+            <!--<artifactId>brave-opentracing</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>io.opentracing.contrib</groupId>
             <artifactId>opentracing-spring-cloud-starter</artifactId>
