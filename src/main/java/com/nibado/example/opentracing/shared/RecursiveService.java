@@ -1,8 +1,11 @@
 package com.nibado.example.opentracing.shared;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
 
 @Service
 @Slf4j
@@ -17,6 +20,7 @@ public class RecursiveService {
         this.config = config;
     }
 
+    @HystrixCommand(fallbackMethod = "fallback")
     public int recursive(int count) {
         if(count > 1) {
             call(count - 1);
@@ -29,14 +33,32 @@ public class RecursiveService {
         return count;
     }
 
-    private Response call(int count) {
-        return restTemplate.getForEntity(config.url(count), Response.class).getBody();
-
-//        try {
-//            return config.client().count(count).execute().body();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+    public int fallback() {
+        return 42;
     }
+
+    private Response call(int count) {
+        if(config.fail()) {
+            throw new RuntimeException();
+        }
+        //return restTemplate.getForEntity(config.url(count), Response.class).getBody();
+        randomSleep();
+        try {
+            return config.client().count(count).execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void randomSleep() {
+        long duration = (long)(Math.random() * 500.0);
+
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

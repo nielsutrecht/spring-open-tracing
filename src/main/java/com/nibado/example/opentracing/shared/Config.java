@@ -15,9 +15,13 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 @EntityScan("com.nibado.example.opentracing.shared")
 public class Config {
     public final String appName;
+    public final double failChance;
 
-    public Config(@Value("${spring.application.name}") String appName) {
+    public Config(
+        @Value("${spring.application.name}") String appName,
+        @Value("${failChance}") double failChance) {
         this.appName = appName;
+        this.failChance = (failChance >= 0.0 && failChance <= 1.0) ? failChance : 0.0;
     }
 
     public String url(int count) {
@@ -26,6 +30,10 @@ public class Config {
         } else {
             return String.format("http://localhost:8080/recursive/%s", count);
         }
+    }
+
+    public boolean fail() {
+        return Math.random() < failChance;
     }
 
     public Client client() {
