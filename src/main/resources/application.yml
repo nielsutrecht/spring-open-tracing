@@ -2,9 +2,9 @@ failChance: 0.1
 
 spring:
   sleuth:
-    propagation-keys:
-    - x-request-id
-    - x-ot-span-context
+#    propagation-keys:
+#    - x-request-id
+#    - x-ot-span-context
     web:
       additional-skip-pattern: /liveness|/readiness|/metrics
     sampler:

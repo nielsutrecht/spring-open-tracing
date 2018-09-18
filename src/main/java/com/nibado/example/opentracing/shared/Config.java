@@ -47,10 +47,15 @@ public class Config {
 
         OkHttpClient client = new OkHttpClient();
 
+        Tracing tracing = Tracing.current();
+        tracing.tracer().currentSpan().tag("foo", "bar");
+
+
+
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(url)
             .client(client)
-            .callFactory(TracingCallFactory.create(Tracing.current(), client))
+            .callFactory(TracingCallFactory.create(tracing, client))
             .addConverterFactory(JacksonConverterFactory.create())
             .build();
 
